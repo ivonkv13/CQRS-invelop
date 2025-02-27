@@ -3,8 +3,6 @@ using InvelopApp.Server.Application.Commands;
 using InvelopApp.Server.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-
 namespace InvelopApp.Server.WebApi.Controllers
 {
     [ApiController]
@@ -40,9 +38,9 @@ namespace InvelopApp.Server.WebApi.Controllers
         public async Task<IActionResult> CreateContact([FromBody] CreateContactCommand command)
         {
             {
-                var productId = await _mediator.Send(command);
+                var contactId = await _mediator.Send(command);
 
-                return CreatedAtAction(nameof(GetContactById), new { id = productId }, null);
+                return CreatedAtAction(nameof(GetContactById), new { id = contactId }, null);
             }
         }
 
