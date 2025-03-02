@@ -33,7 +33,10 @@ export class UpdateContactComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['contact'] && this.contact) {
-      this.contactForm.patchValue(this.contact);
+      this.contactForm.patchValue({
+        ...this.contact,
+        dateOfBirth: this.formatDate(this.contact.dateOfBirth) // ✅ Convert to YYYY-MM-DD format
+      });
       this.showDialog();
     }
   }
@@ -57,5 +60,12 @@ export class UpdateContactComponent implements OnChanges {
 
   closeDialog() {
     this.visible = false;
+  }
+
+  formatDate(date: string | Date): string {
+    if (!date) return '';
+  
+    const d = new Date(date);
+    return d.toISOString().split('T')[0]; // ✅ Converts to YYYY-MM-DD
   }
 }
