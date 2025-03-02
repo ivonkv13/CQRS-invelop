@@ -1,8 +1,10 @@
 ﻿
 using InvelopApp.Server.Application.Commands;
 using InvelopApp.Server.Application.Queries;
+using InvelopApp.Server.Shared.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace InvelopApp.Server.WebApi.Controllers
@@ -18,7 +20,7 @@ namespace InvelopApp.Server.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("GetById/{id}", Name = "GetContactById")]
         public async Task<IActionResult> GetContactById(Guid id)
         {
             var contact = await _mediator.Send(new GetContactByIdQuery(id));
@@ -39,15 +41,15 @@ namespace InvelopApp.Server.WebApi.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> CreateContact([FromBody] CreateContactCommand command)
         {
-            {
-                var productId = await _mediator.Send(command);
+            var contact = await _mediator.Send(command);
 
-                return CreatedAtAction(nameof(GetContactById), new { id = productId }, null);
-            }
+            if (contact is null) return BadRequest();
+
+            return Created("", contact);
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateContact(Guid id, [FromBody] UpdateContactCommand command)
+        public async Task<IActionResult> UpdateContact([FromRoute] Guid id, [FromBody] UpdateContactCommand command)
         {
 
             if (id != command.Id)
@@ -55,18 +57,18 @@ namespace InvelopApp.Server.WebApi.Controllers
                 return BadRequest("ID in URL and body must match.");
             }
 
-            var success = await _mediator.Send(command);
-            if (!success)
+            var contact = await _mediator.Send(command);
+            if (contact is null)
             {
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok(contact);
 
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeleteContact(Guid id)
+        public async Task<IActionResult> DeleteContact([FromRoute] Guid id)
         {
             var success = await _mediator.Send(new DeleteContactCommand(id));
 
@@ -75,7 +77,7 @@ namespace InvelopApp.Server.WebApi.Controllers
                 return NotFound("Something went wrong! Either the contact is missing or have already beem deleted.");
             }
 
-            return NoContent();
+            return Ok(new { id });
         }
     }
 }

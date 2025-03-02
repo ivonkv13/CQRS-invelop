@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using InvelopApp.Server.Domain;
 using InvelopApp.Server.Infrastructure;
 using MediatR;
 
 namespace InvelopApp.Server.Application.Commands.Handlers
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateContactCommand, bool>
+    public class UpdateProductHandler : IRequestHandler<UpdateContactCommand, Contact?>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -15,16 +16,16 @@ namespace InvelopApp.Server.Application.Commands.Handlers
             _mapper = mapper;
         }
 
-        public async Task<bool> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
+        public async Task<Contact?> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
             var contact = await _context.Contacts.FindAsync(request.Id, cancellationToken);
 
-            if (contact == null) return false;
+            if (contact == null) return null;
 
             contact = _mapper.Map(request, contact);
 
             await _context.SaveChangesAsync(cancellationToken);
-            return true;
+            return contact;
 
         }
     }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace InvelopApp.Server.Application.Commands.Handlers
 {
-    public class CreateContactHandler : IRequestHandler<CreateContactCommand, Guid>
+    public class CreateContactHandler : IRequestHandler<CreateContactCommand, Contact>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -16,15 +16,15 @@ namespace InvelopApp.Server.Application.Commands.Handlers
             _mapper = mapper;
         }
 
-        public async Task<Guid> Handle(CreateContactCommand request, CancellationToken cancellationToken)
+        public async Task<Contact> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
             var contact = _mapper.Map<Contact>(request);
 
-            contact.Id = new Guid();
+            contact.Id = Guid.NewGuid();
 
             await _context.Contacts.AddAsync(contact, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-            return contact.Id;
+            return contact;
         }
     }
 }
