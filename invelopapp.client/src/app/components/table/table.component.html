@@ -23,10 +23,17 @@
     </ng-template>
     <ng-template #body let-rowData let-columns="columns">
         <tr>
-            <td style="display: none;">{{rowData["id"]}}</td>
+            <td class="not-displayed" >{{rowData["id"]}}</td>
+
             <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
-            </td>
+                <ng-container *ngIf="col.field === 'dateOfBirth'; else normalValue">
+                  {{ rowData[col.field] | date: 'yyyy-MM-dd' }}
+                </ng-container>
+                <ng-template #normalValue>
+                  {{ rowData[col.field] }}
+                </ng-template>
+              </td>
+              
             <td>
                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info button-with-margin" (click)="openUpdateContactDialog(rowData)">
                 </button>
