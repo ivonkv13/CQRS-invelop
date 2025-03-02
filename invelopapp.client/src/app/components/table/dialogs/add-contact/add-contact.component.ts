@@ -26,10 +26,13 @@ export class AddContactComponent {
   }
 
   showDialog() {
+    this.contactForm.reset(); 
     this.visible = true;
   }
+  
 
   closeDialog() {
+    this.contactForm.reset(); 
     this.visible = false;
   }
 
