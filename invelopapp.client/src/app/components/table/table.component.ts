@@ -3,7 +3,6 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { Contact } from '../../../models/contact.model';
 import { Store } from '@ngrx/store';
 import {
-  createContact,
   deleteContact,
   loadContacts,
   updateContact,
@@ -74,10 +73,6 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   
     this.store.dispatch(deleteContact({ id: contact.id }));
-  }
-
-  updateContact(contact: Contact) {
-    this.store.dispatch(updateContact({ id: contact.id, contact }));
   }
 
   openAddContactDialog() {
