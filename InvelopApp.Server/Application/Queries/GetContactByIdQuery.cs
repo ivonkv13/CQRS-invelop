@@ -3,5 +3,5 @@ using MediatR;
 
 namespace InvelopApp.Server.Application.Queries
 {
-    public record GetContactByIdQuery(Guid id) : IRequest<ContactDto>;
+    public record GetContactByIdQuery(Guid id) : IRequest<ContactDto?>;
 }

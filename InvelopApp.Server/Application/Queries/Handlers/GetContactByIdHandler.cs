@@ -15,7 +15,7 @@ namespace InvelopApp.Server.Application.Queries.Handlers
             _context = context;
         }
 
-        public async Task<ContactDto> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ContactDto?> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
         {
             var contact = await _context.Contacts.FindAsync(request.id, cancellationToken);
 
