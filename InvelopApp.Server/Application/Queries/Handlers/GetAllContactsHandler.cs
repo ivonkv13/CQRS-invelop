@@ -17,6 +17,7 @@ namespace InvelopApp.Server.Application.Queries.Handlers
         public async Task<List<ContactDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
             var contacts = await _context.Contacts
+                .AsNoTracking()
                 .Select(contact => new ContactDto
                 {
                     Id = contact.Id,
