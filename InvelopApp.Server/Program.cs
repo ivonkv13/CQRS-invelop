@@ -32,6 +32,17 @@ namespace InvelopApp.Server
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.WithOrigins("https://127.0.0.1:51308", "https://localhost:51308")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
+
             var app = builder.Build();
 
             app.UseDefaultFiles();
@@ -47,6 +58,8 @@ namespace InvelopApp.Server
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 
