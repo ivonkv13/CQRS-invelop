@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using InvelopApp.Server.Application.Common;
+using FluentValidation;
+using System.Text.Json;
 
 namespace InvelopApp.Server.Middleware
 {
@@ -12,40 +14,41 @@ namespace InvelopApp.Server.Middleware
             _next = next;
             _env = env;
         }
-
+        
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
                 await _next(context);
             }
-            catch (FluentValidation.ValidationException ex) 
-            {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                context.Response.ContentType = "application/json";
-
-                var errors = ex.Errors
-                    .Select(e => new { field = e.PropertyName, message = e.ErrorMessage })
-                    .ToList();
-
-                var response = new
-                {
-                    success = false,
-                    errors
-                };
-
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
-            }
             catch (Exception ex)
             {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
 
-                var response = new
+                context.Response.StatusCode = ex switch
                 {
-                    success = false,
-                    message = "An unexpected error occurred.",
-                    details = _env.IsDevelopment() ? ex.Message : null
+                    ValidationException => StatusCodes.Status400BadRequest,
+                    _ => StatusCodes.Status500InternalServerError
+                };
+
+                object response = ex switch
+                {
+                    ValidationException validationException => new ErrorResponse
+                    {
+                        Success = false,
+                        Message = null,
+                        Errors = validationException.Errors
+                            .Select(e => new { field = e.PropertyName, message = e.ErrorMessage })
+                            .ToList(),
+                        Details = null
+                    },
+                    _ => new ErrorResponse
+                    {
+                        Success = false,
+                        Message = "Something went wrong.",
+                        Errors = null,
+                        Details = _env.IsDevelopment() ? ex.Message : null
+                    }
                 };
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));
