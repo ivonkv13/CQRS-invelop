@@ -25,7 +25,7 @@ const initialState: ContactState = {
 export const contactReducer = createReducer(
   initialState,
 
-  // Load Products
+  // Load Contact
   on(ContactActions.loadContacts, (state) => ({
     ...state,
     loading: true,
@@ -60,7 +60,7 @@ export const contactReducer = createReducer(
     error,
   })),
 
-  // Update Product
+  // Update Contact
   on(ContactActions.updateContact, (state, { id, contact }) => ({
     ...state,
     loading: false,
@@ -80,7 +80,7 @@ export const contactReducer = createReducer(
     error,
   })),
 
-  // Delete Product
+  // Delete Contact
   on(ContactActions.deleteContact, (state, { id }) => ({
     ...state,
     loading: true,
