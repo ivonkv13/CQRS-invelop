@@ -77,7 +77,13 @@ namespace InvelopApp.Server.WebApi.Controllers
                 return NotFound("Something went wrong! Either the contact is missing or have already beem deleted.");
             }
 
-            return Ok(new { id });
+            return Ok(id);
+        }
+
+        [HttpGet("Test")]
+        public async Task<IActionResult> Test()
+        {
+            throw new ArgumentNullException();
         }
     }
 }

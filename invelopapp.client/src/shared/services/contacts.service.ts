@@ -29,7 +29,6 @@ export class ContactsService {
 
   deleteContact(id: string): Observable<string> {
     return this.http
-      .delete<{ id: string }>(`${this.apiUrl}/Delete/${id}`)
-      .pipe(map((response) => response.id));
+      .delete<string>(`${this.apiUrl}/Delete/${id}`);
   }
 }
