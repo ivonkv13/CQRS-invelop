@@ -8,13 +8,14 @@ namespace InvelopApp.Server.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly IHostEnvironment _env;
+        const string _responseContetntType = "application/json";
 
         public ExceptionMiddleware(RequestDelegate next, IHostEnvironment env)
         {
             _next = next;
             _env = env;
         }
-        
+
         public async Task InvokeAsync(HttpContext context)
         {
             try
@@ -23,7 +24,7 @@ namespace InvelopApp.Server.Middleware
             }
             catch (Exception ex)
             {
-                context.Response.ContentType = "application/json";
+                context.Response.ContentType = _responseContetntType;
 
                 context.Response.StatusCode = ex switch
                 {
@@ -36,7 +37,7 @@ namespace InvelopApp.Server.Middleware
                     ValidationException validationException => new ErrorResponse
                     {
                         Success = false,
-                        Message = null,
+                        Message = "Issues with the request format.",
                         Errors = validationException.Errors
                             .Select(e => new { field = e.PropertyName, message = e.ErrorMessage })
                             .ToList(),
