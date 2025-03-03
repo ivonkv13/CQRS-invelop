@@ -25,7 +25,7 @@ namespace InvelopApp.Server.WebApi.Controllers
         {
             var contact = await _mediator.Send(new GetContactByIdQuery(id));
 
-            if (contact == null) return NotFound();
+            if (contact == null) return NotFound($"No contact with this ID is found - {id}");
 
             return Ok(contact);
         }
@@ -54,13 +54,14 @@ namespace InvelopApp.Server.WebApi.Controllers
 
             if (id != command.Id)
             {
-                return BadRequest("ID in URL and body must match.");
+                return BadRequest($"ID {id} in URL and body {command.Id} must match.");
             }
 
             var contact = await _mediator.Send(command);
+
             if (contact is null)
             {
-                return NotFound();
+                return NotFound($"No contact with this ID is found - {id}");
             }
 
             return Ok(contact);
@@ -74,7 +75,7 @@ namespace InvelopApp.Server.WebApi.Controllers
 
             if (!success)
             {
-                return NotFound("Something went wrong! Either the contact is missing or have already beem deleted.");
+                return NotFound($"Something went wrong! Either the contact with {id} is missing or have already beem deleted.");
             }
 
             return Ok(id);

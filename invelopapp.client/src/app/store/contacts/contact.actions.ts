@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Contact, CreateContactRequest } from '../../../models/contact.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorResponse } from '../../../models/error-response';
 
 // Load Contacts
 export const loadContacts = createAction('[Contact] Load Contacts');
@@ -37,7 +39,7 @@ export const updateContactSuccess = createAction(
 );
 export const updateContactFailure = createAction(
   '[Contact] Update Contact Failure',
-  props<{ error: string }>()
+  props<{ error: ErrorResponse }>()
 );
 
 // Delete Contact
