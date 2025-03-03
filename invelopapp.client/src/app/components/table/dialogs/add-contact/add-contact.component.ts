@@ -20,8 +20,8 @@ export class AddContactComponent {
       lastName: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       address: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      iban: ['', [Validators.required, Validators.minLength(15)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
+      iban: ['', [Validators.required, Validators.pattern(/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/)]],
     });
   }
 
