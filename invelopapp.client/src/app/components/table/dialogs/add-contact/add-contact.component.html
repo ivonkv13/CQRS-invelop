@@ -19,14 +19,14 @@
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="phoneNumber" class="font-semibold w-24">Phone</label>
-                <input pInputText id="phoneNumber" formControlName="phoneNumber" class="flex-auto" autocomplete="off" />
+                <input pInputText id="phoneNumber" formControlName="phoneNumber" class="flex-auto" autocomplete="off" placeholder="ex..: +359123455678"/>
                 <small *ngIf="contactForm.controls['phoneNumber'].invalid && contactForm.controls['phoneNumber'].touched" class="text-red-500">
                     Invalid phone number!
                 </small>
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="iban" class="font-semibold w-24">IBAN</label>
-                <input pInputText id="iban" formControlName="iban" class="flex-auto" autocomplete="off" />
+                <input pInputText id="iban" formControlName="iban" class="flex-auto" autocomplete="off" placeholder="ex..: DE89370400440532013000"/>
                 <small *ngIf="contactForm.controls['iban'].invalid && contactForm.controls['iban'].touched" class="text-red-500">
                     Invalid IBAN!
                 </small>

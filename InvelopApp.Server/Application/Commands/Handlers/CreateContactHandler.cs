@@ -18,9 +18,7 @@ namespace InvelopApp.Server.Application.Commands.Handlers
 
         public async Task<Contact> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
-            var contact = _mapper.Map<Contact>(request);
-
-            contact.Id = Guid.NewGuid();
+            var contact = Contact.Create(request.FirstName, request.LastName, request.DateOfBirth, request.Address, request.PhoneNumber, request.IBAN);
 
             await _context.Contacts.AddAsync(contact, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);

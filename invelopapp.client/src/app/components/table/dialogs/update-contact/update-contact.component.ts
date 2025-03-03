@@ -26,8 +26,8 @@ export class UpdateContactComponent implements OnChanges {
         Validators.required,
       ],
       address: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      iban: ['', [Validators.required, Validators.minLength(15)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
+      iban: ['', [Validators.required, Validators.pattern(/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/)]],
     });
   }
 
@@ -35,7 +35,7 @@ export class UpdateContactComponent implements OnChanges {
     if (changes['contact'] && this.contact) {
       this.contactForm.patchValue({
         ...this.contact,
-        dateOfBirth: this.formatDate(this.contact.dateOfBirth) // ✅ Convert to YYYY-MM-DD format
+        dateOfBirth: this.formatDate(this.contact.dateOfBirth)
       });
       this.showDialog();
     }
@@ -66,6 +66,6 @@ export class UpdateContactComponent implements OnChanges {
     if (!date) return '';
   
     const d = new Date(date);
-    return d.toISOString().split('T')[0]; // ✅ Converts to YYYY-MM-DD
+    return d.toISOString().split('T')[0];
   }
 }
