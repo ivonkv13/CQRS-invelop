@@ -1,11 +1,8 @@
 ﻿
 using InvelopApp.Server.Application.Commands;
 using InvelopApp.Server.Application.Queries;
-using InvelopApp.Server.Shared.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace InvelopApp.Server.WebApi.Controllers
 {
@@ -20,7 +17,7 @@ namespace InvelopApp.Server.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetById/{id}", Name = "GetContactById")]
+        [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetContactById(Guid id)
         {
             var contact = await _mediator.Send(new GetContactByIdQuery(id));
@@ -84,7 +81,7 @@ namespace InvelopApp.Server.WebApi.Controllers
         [HttpGet("Test")]
         public async Task<IActionResult> Test()
         {
-            throw new ArgumentNullException();
+            throw new NotImplementedException();
         }
     }
 }

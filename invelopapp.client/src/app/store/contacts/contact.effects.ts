@@ -10,10 +10,9 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ContactsService } from '../../../shared/services/contacts.service';
-import { Contact, CreateContactRequest } from '../../../models/contact.model';
+import { Contact } from '../../../models/contact.model';
 import { ToastrService } from 'ngx-toastr';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse, ValidationError } from '../../../models/error-response';
+import { getFormattedServerError } from '../../../shared/helpers/http-error-helper';
 
 @Injectable()
 export class ContactEffects {
@@ -49,7 +48,7 @@ export class ContactEffects {
             });
           }),
           catchError((error) => {
-            this.toastr.error(`Failed to create contact. ${this.getFormattedServerError(error)}`, 'Error');
+            this.toastr.error(`Failed to create contact. ${getFormattedServerError(error)}`, 'Error');
             return of(
               ContactActions.createContactFailure({ error: error.message })
             );
@@ -72,7 +71,7 @@ export class ContactEffects {
           }),
           catchError((error) => {
 
-            this.toastr.error(`Failed to update contact. \n ${this.getFormattedServerError(error)}`, 'Error');
+            this.toastr.error(`Failed to update contact. \n ${getFormattedServerError(error)}`, 'Error');
             return of(
               ContactActions.updateContactFailure({ error: error.message })
             );
@@ -92,7 +91,7 @@ export class ContactEffects {
             return ContactActions.deleteContactSuccess({ id });
           }),
           catchError((error) => {
-            this.toastr.error(`Failed to delete contact! \n ${this.getFormattedServerError(error)}`, 'Error');
+            this.toastr.error(`Failed to delete contact! \n ${getFormattedServerError(error)}`, 'Error');
             return of(
               ContactActions.deleteContactFailure({ error: error.message })
             );
@@ -101,23 +100,4 @@ export class ContactEffects {
       )
     )
   );
-
-  getFormattedServerError(error: ErrorResponse): string {
-    switch (error.status) {
-      case 400:
-        const errorsArray = error.error?.Errors as Array<ValidationError>;
-
-        const errorMessages = errorsArray.map(
-          (err) => err.message || JSON.stringify(err)
-        );
-        const formattedErrors = errorMessages.join('\n ');
-        return formattedErrors;
-
-      case 500: 
-        return "There was an error with your request";
-
-      default:
-        return "There was an error with your request";
-    }
-  }
 }

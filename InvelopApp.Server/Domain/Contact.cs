@@ -38,6 +38,16 @@ namespace InvelopApp.Server.Domain
             return new Contact(firstName, lastName, dateOfBirth, address, phoneNumber, iban);
         }
 
+        public void Update(string firstName, string lastName, DateTime dateOfBirth, string address, string phoneNumber, string iban)
+        {
+            SetFirstName(firstName);
+            SetLastName(lastName);
+            SetDateOfBirth(dateOfBirth);
+            SetAddress(address);
+            SetPhoneNumber(phoneNumber);
+            SetIBAN(iban);
+        }
+
         public void SetFirstName(string firstName)
         {
             if (string.IsNullOrWhiteSpace(firstName))
