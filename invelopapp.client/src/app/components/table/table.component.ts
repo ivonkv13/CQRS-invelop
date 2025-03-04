@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Contact } from '../../../models/contact.model';
 import { Store } from '@ngrx/store';
 import {
@@ -40,7 +40,6 @@ export class TableComponent implements OnInit, OnDestroy {
   updateContactDialogComponent!: UpdateContactComponent;
 
   selectedContact: Contact | null = null;
-  selectedContactForDelete: Contact | null = null;
 
   constructor(private store: Store<ContactState>) {}
 

@@ -11,36 +11,34 @@
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="dateOfBirth" class="font-semibold w-24">Date of Birth</label>
-                <p-date-picker id="dateOfBirth" 
-                            formControlName="dateOfBirth" 
-                            [showIcon]="true" 
-                            [maxDate]="yesterday" 
-                            [autofocus]="true"
-                            dateFormat="yy-mm-dd" 
-                            appendTo="body"
-                            >
+                <p-date-picker id="dateOfBirth" formControlName="dateOfBirth" [showIcon]="true" [maxDate]="yesterday"
+                    [autofocus]="true" dateFormat="yy-mm-dd" appendTo="body">
                 </p-date-picker>
             </div>
-            
             <div class="flex items-center gap-4 mb-4">
                 <label for="address" class="font-semibold w-24">Address</label>
                 <input pInputText id="address" formControlName="address" class="flex-auto" autocomplete="off" />
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="phoneNumber" class="font-semibold w-24">Phone</label>
-                <input pInputText id="phoneNumber" formControlName="phoneNumber" class="flex-auto" autocomplete="off" placeholder="ex..: +359123455678"/>
-                <small *ngIf="contactForm.controls['phoneNumber'].invalid && contactForm.controls['phoneNumber'].touched" class="text-red-500">
+                <input pInputText id="phoneNumber" formControlName="phoneNumber" class="flex-auto" autocomplete="off"
+                    placeholder="ex..: +359123455678" />
+                <small
+                    *ngIf="contactForm.controls['phoneNumber'].invalid && contactForm.controls['phoneNumber'].touched"
+                    class="text-red-500">
                     Invalid phone number!
                 </small>
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="iban" class="font-semibold w-24">IBAN</label>
-                <input pInputText id="iban" formControlName="iban" class="flex-auto" autocomplete="off" placeholder="ex..: DE89370400440532013000"/>
-                <small *ngIf="contactForm.controls['iban'].invalid && contactForm.controls['iban'].touched" class="text-red-500">
+                <input pInputText id="iban" formControlName="iban" class="flex-auto" autocomplete="off"
+                    placeholder="ex..: DE89370400440532013000" />
+                <small *ngIf="contactForm.controls['iban'].invalid && contactForm.controls['iban'].touched"
+                    class="text-red-500">
                     Invalid IBAN!
                 </small>
             </div>
-
+            
             <div class="flex justify-end gap-2">
                 <p-button label="Cancel" severity="secondary" (click)="closeDialog()" />
                 <p-button label="Save" [disabled]="contactForm.invalid" (click)="saveContact()" />
