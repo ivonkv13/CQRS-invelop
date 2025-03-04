@@ -1,6 +1,6 @@
 describe('Delete Contact', () => {
     beforeEach(() => {
-      cy.visit('https://localhost:51308');
+      cy.visit('https://localhost:51308/contacts');
     });
   
     it('should delete a contact and correctly handle an empty table', () => {

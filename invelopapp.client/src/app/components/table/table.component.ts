@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import {
   deleteContact,
   loadContacts,
-  updateContact,
 } from '../../store/contacts/contact.actions';
 import { ContactState } from '../../store/contacts/contact.reducer';
 import { selectAllContacts } from '../../store/contacts/contact.selectors';
@@ -31,6 +30,8 @@ export class TableComponent implements OnInit, OnDestroy {
     { header: 'Phone number', field: 'phoneNumber' },
     { header: 'IBAN', field: 'iban' },
   ];
+
+  rowsPerPageOptions: number[] = [5, 10, 20];
 
   @ViewChild('addContactDialog')
   addContactDialogComponent!: AddContactComponent;

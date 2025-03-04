@@ -2,9 +2,9 @@
 <app-update-contact #updateContactDialog [contact]="selectedContact"></app-update-contact>
 
 <p-table [value]="contacts" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
-    [rowsPerPageOptions]="[5, 10, 20]" [columns]="columns" [tableStyle]="{ 'min-width': '50rem' }">
+    [rowsPerPageOptions]="rowsPerPageOptions" [columns]="columns" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="caption">
-        <div class="table-header">
+        <div class="table-header text-left">
             <button pButton pRipple icon="pi pi-plus" class="p-button-info" (click)="openAddContactDialog()">
                 Add Contact
             </button>
@@ -23,21 +23,23 @@
     </ng-template>
     <ng-template #body let-rowData let-columns="columns">
         <tr>
-            <td class="not-displayed" >{{rowData["id"]}}</td>
+            <td class="not-displayed">{{rowData["id"]}}</td>
 
             <td *ngFor="let col of columns">
                 <ng-container *ngIf="col.field === 'dateOfBirth'; else normalValue">
-                  {{ rowData[col.field] | date: 'yyyy-MM-dd' }}
+                    {{ rowData[col.field] | date: 'yyyy-MM-dd' }}
                 </ng-container>
                 <ng-template #normalValue>
-                  {{ rowData[col.field] }}
+                    {{ rowData[col.field] }}
                 </ng-template>
-              </td>
-              
+            </td>
+
             <td>
-                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info button-with-margin" (click)="openUpdateContactDialog(rowData)">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info button-with-margin"
+                    (click)="openUpdateContactDialog(rowData)">
                 </button>
-                <button id="delete-contact-btn" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteContact(rowData)">
+                <button id="delete-contact-btn" pButton pRipple icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger" (click)="deleteContact(rowData)">
                 </button>
             </td>
         </tr>
