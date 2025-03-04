@@ -11,7 +11,15 @@
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="dateOfBirth" class="font-semibold w-24">Date of Birth</label>
-                <input pInputText id="dateOfBirth" type="date" formControlName="dateOfBirth" class="flex-auto" />
+                <p-date-picker id="dateOfBirth" 
+                            formControlName="dateOfBirth" 
+                            [showIcon]="true" 
+                            [maxDate]="yesterday" 
+                            [autofocus]="true"
+                            dateFormat="yy-mm-dd" 
+                            appendTo="body"
+                            >
+                </p-date-picker>
             </div>
             <div class="flex items-center gap-4 mb-4">
                 <label for="address" class="font-semibold w-24">Address</label>

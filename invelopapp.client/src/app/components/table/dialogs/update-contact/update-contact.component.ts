@@ -15,6 +15,7 @@ export class UpdateContactComponent implements OnChanges {
 
   visible: boolean = false;
   contactForm: FormGroup;
+  yesterday: Date = new Date;
 
   constructor(private fb: FormBuilder, private store: Store<ContactState>) {
     this.contactForm = this.fb.group({
