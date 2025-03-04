@@ -20,7 +20,7 @@ The **Personal Contacts Management Web App** is a full-stack application that al
 ✅ **UI Components** – Uses **PrimeNG** to provide a clean and user-friendly interface.  
 ✅ **Automated Testing** – Includes:  
 &nbsp;&nbsp;&nbsp;&nbsp;🔹 **xUnit** test for backend functionality.  
-&nbsp;&nbsp;&nbsp;&nbsp;🔹 **Playwright/Cypress** test for end-to-end frontend validation.  
+&nbsp;&nbsp;&nbsp;&nbsp;🔹 **Cypress** test for end-to-end frontend validation.  
 
 ---
 
@@ -40,7 +40,7 @@ The **Personal Contacts Management Web App** is a full-stack application that al
 - **Angular** – Frontend framework for building a responsive UI.  
 - **NgRx Store** – Manages global state in Angular.  
 - **PrimeNG** – Provides UI components.  
-- **Playwright/Cypress** – Used for end-to-end testing.  
+- **Cypress** – Used for end-to-end testing.  
 
 ---
 
