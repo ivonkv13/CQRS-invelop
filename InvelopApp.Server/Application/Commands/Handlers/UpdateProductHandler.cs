@@ -22,7 +22,7 @@ namespace InvelopApp.Server.Application.Commands.Handlers
 
             if (contact == null) return null;
 
-            contact = _mapper.Map(request, contact);
+            contact.Update(request.FirstName, request.LastName, request.DateOfBirth, request.Address, request.PhoneNumber, request.IBAN);
 
             await _context.SaveChangesAsync(cancellationToken);
             return contact;
