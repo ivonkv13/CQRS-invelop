@@ -31,7 +31,7 @@ describe('Delete Contact', () => {
           cy.get('table tbody').then(($newTbody) => {
             if ($newTbody.length === 0) {
               cy.log('All contacts deleted! Table is now empty.');
-              cy.get('table tbody').should('not.exist'); // ✅ Confirm tbody is gone
+              cy.get('table tbody').should('not.exist'); 
             } else {
               // Get updated row count and ensure it's decreased
               const newRowCount = $newTbody.find('tr').length;

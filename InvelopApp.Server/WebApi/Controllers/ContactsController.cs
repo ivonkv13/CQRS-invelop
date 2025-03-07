@@ -6,6 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InvelopApp.Server.WebApi.Controllers
 {
+
+    /// <summary>
+    /// Can be split in 2 separate controllers encapsulating commands and queruies.
+    ///
+    /// 1. ContactsQueriesController -> route: /contacts
+    /// 2. ContactsCommandController -> route: /contacts
+    /// </summary>
+
     [ApiController]
     [Route("api/[controller]")]
     public class ContactsController : ControllerBase

@@ -61,9 +61,9 @@ export const contactReducer = createReducer(
   })),
 
   // Update Contact
-  on(ContactActions.updateContact, (state, { id, contact }) => ({
+  on(ContactActions.updateContact, (state) => ({
     ...state,
-    loading: false,
+    loading: true,
   })),
   on(ContactActions.updateContactSuccess, (state, { contact }) => {
     return {

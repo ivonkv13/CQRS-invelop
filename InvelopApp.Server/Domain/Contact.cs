@@ -24,7 +24,6 @@ namespace InvelopApp.Server.Domain
 
         private Contact(string firstName, string lastName, DateTime dateOfBirth, string address, string phoneNumber, string iban)
         {
-            Id = Guid.NewGuid();
             SetFirstName(firstName);
             SetLastName(lastName);
             SetDateOfBirth(dateOfBirth);

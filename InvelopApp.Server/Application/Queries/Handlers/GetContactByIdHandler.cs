@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InvelopApp.Server.Application.Queries.Handlers
 {
-    public class GetContactByIdHandler : IRequestHandler<GetContactByIdQuery, ContactDto>
+    public class GetContactByIdHandler : IRequestHandler<GetContactByIdQuery, ContactDto?>
     {
         private readonly AppDbContext _context;
 

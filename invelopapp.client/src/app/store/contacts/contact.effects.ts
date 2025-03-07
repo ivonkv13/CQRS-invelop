@@ -5,7 +5,6 @@ import {
   catchError,
   exhaustMap,
   map,
-  mergeMap,
   switchMap,
 } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -70,7 +69,6 @@ export class ContactEffects {
             });
           }),
           catchError((error) => {
-
             this.toastr.error(`Failed to update contact. \n ${getFormattedServerError(error)}`, 'Error');
             return of(
               ContactActions.updateContactFailure({ error: error.message })

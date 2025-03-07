@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { Contact, CreateContactRequest } from '../../../models/contact.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../../../models/error-response';
 
 // Load Contacts
