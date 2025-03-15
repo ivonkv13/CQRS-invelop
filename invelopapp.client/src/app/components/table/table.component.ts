@@ -1,33 +1,27 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Contact } from '../../../models/contact.model';
-import { Store } from '@ngrx/store';
-import {
-  deleteContact,
-  loadContacts,
-} from '../../store/contacts/contact.actions';
-import { ContactState } from '../../store/contacts/contact.reducer';
-import { selectAllContacts } from '../../store/contacts/contact.selectors';
 import { TableColumn } from '../../../models/table-column.model';
 import { AddContactComponent } from './dialogs/add-contact/add-contact.component';
 import { UpdateContactComponent } from './dialogs/update-contact/update-contact.component';
+import { ContactFacade } from '../../../shared/facades/contact.facade';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
-export class TableComponent implements OnInit, OnDestroy {
-  contacts: Contact[] = [];
+export class TableComponent implements OnInit {
+  contacts$: Observable<Contact[]>;
 
   unsubscribe$: Subject<void> = new Subject<void>();
 
-  columns: TableColumn[] = [
+  columns: TableColumn<Contact>[] = [
     { header: 'First Name', field: 'firstName' },
     { header: 'Last Name', field: 'lastName' },
-    { header: 'Date of birth', field: 'dateOfBirth' },
+    { header: 'Date of Birth', field: 'dateOfBirth' },
     { header: 'Address', field: 'address' },
-    { header: 'Phone number', field: 'phoneNumber' },
+    { header: 'Phone Number', field: 'phoneNumber' },
     { header: 'IBAN', field: 'iban' },
   ];
 
@@ -41,68 +35,26 @@ export class TableComponent implements OnInit, OnDestroy {
 
   selectedContact: Contact | null = null;
 
-  constructor(private store: Store<ContactState>) {}
+  constructor(private contactFacade: ContactFacade) {
+    this.contacts$ = this.contactFacade.contacts$;
+  }
 
   ngOnInit() {
-    this.loadContacts();
-    this.subscribeToContacts();
+    this.contactFacade.loadContacts();
   }
 
-  loadContacts() {
-    this.store.dispatch(loadContacts());
-  }
-
-  //Listne for store updates
-  subscribeToContacts() {
-    this.store
-      .select(selectAllContacts)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (data: Contact[]) => {
-          this.contacts = data ?? [];
-        },
-        (error) => {
-          console.error('Error fetching contacts:', error);
-        }
-      );
-  }
-
-  deleteContact(contact: Contact) {
-    if (!contact || !contact.id) {
-      return;
+  deleteContact(contact: Contact): void {
+    if (contact?.id) {
+      this.contactFacade.deleteContact(contact.id);
     }
-  
-    this.store.dispatch(deleteContact({ id: contact.id }));
   }
 
-  openAddContactDialog() {
-    if (!this.addContactDialogComponent) {
-      return;
-    }
-
-    this.addContactDialogComponent.showDialog();
+  openAddContactDialog(): void {
+    this.addContactDialogComponent?.showDialog();
   }
 
-  openUpdateContactDialog(contact: Contact) {
-    this.selectedContact = contact || {
-      id: '',
-      firstName: '',
-      lastName: '',
-      dateOfBirth: new Date(),
-      address: '',
-      phoneNumber: '',
-      iban: '',
-    };
-
-    if (!this.updateContactDialogComponent) {
-      return;
-    }
-
-    this.updateContactDialogComponent.showDialog();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  openUpdateContactDialog(contact: Contact): void {
+    this.selectedContact = contact;
+    this.updateContactDialogComponent?.showDialog();
   }
 }

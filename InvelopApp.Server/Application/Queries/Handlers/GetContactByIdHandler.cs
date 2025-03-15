@@ -1,35 +1,31 @@
-﻿using InvelopApp.Server.Infrastructure;
+﻿using AutoMapper;
+using InvelopApp.Server.Domain;
+using InvelopApp.Server.Infrastructure;
 using InvelopApp.Server.Shared.Dtos;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace InvelopApp.Server.Application.Queries.Handlers
 {
     public class GetContactByIdHandler : IRequestHandler<GetContactByIdQuery, ContactDto?>
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GetContactByIdHandler(AppDbContext context)
+        public GetContactByIdHandler(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ContactDto?> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
         {
-            var contact = await _context.Contacts.FindAsync(request.id, cancellationToken);
+            var contact = await _context.Contacts.FindAsync(request.Id, cancellationToken);
 
             if (contact == null) return null;
 
-            return new ContactDto { 
-                Id = contact.Id, 
-                FirstName = contact.FirstName, 
-                LastName = contact.LastName, 
-                DateOfBirth = contact.DateOfBirth, 
-                Address = contact.Address,
-                PhoneNumber = contact.PhoneNumber, 
-                IBAN = contact.IBAN 
-            };
+            var contactDto = _mapper.Map<Contact, ContactDto>(contact);
+
+            return contactDto;
         }
     }
 }

@@ -5,7 +5,7 @@ const selectContactState = createFeatureSelector<ContactState>('contacts');
 
 const selectAllContacts = createSelector(
   selectContactState,
-  (state) => state.contacts
+  (state) => state.contacts ?? []
 );
 
 //#region Loading selectrs

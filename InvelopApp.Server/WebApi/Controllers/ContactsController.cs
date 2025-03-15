@@ -85,11 +85,5 @@ namespace InvelopApp.Server.WebApi.Controllers
 
             return Ok(id);
         }
-
-        [HttpGet("Test")]
-        public async Task<IActionResult> Test()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

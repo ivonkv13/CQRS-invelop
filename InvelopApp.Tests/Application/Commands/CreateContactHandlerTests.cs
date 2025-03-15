@@ -1,10 +1,10 @@
-﻿using InvelopApp.Server.Infrastructure;
-using InvelopApp.Server.Domain;
-using InvelopApp.Server.Application.Commands.Handlers;
-using InvelopApp.Server.Application.Commands;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using FluentAssertions;
+using InvelopApp.Server.Application.Commands;
+using InvelopApp.Server.Application.Commands.Handlers;
+using InvelopApp.Server.Domain;
+using InvelopApp.Server.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvelopApp.Tests.Application.Commands
 {

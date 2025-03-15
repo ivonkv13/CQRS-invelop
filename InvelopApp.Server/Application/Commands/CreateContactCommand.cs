@@ -1,8 +1,8 @@
-﻿using InvelopApp.Server.Domain;
+﻿using InvelopApp.Server.Shared.Dtos;
 using MediatR;
 
 namespace InvelopApp.Server.Application.Commands
 {
-    public record CreateContactCommand(string FirstName, string LastName, 
-        DateTime DateOfBirth, string Address, string PhoneNumber, string IBAN) : IRequest<Contact>;
+    public record CreateContactCommand(string FirstName, string LastName,
+        DateTime DateOfBirth, string Address, string PhoneNumber, string IBAN) : IRequest<ContactDto>;
 }
