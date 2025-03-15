@@ -33,7 +33,7 @@ export const contactReducer = createReducer(
   })),
   on(ContactActions.loadContactsSuccess, (state, { contacts }) => ({
     ...state,
-    contacts,
+    contacts: contacts ?? [],
     loading: false,
     error: null,
   })),

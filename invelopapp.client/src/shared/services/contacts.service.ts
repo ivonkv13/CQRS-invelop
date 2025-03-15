@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Contact, CreateContactRequest } from '../../models/contact.model';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactsService {
-  private apiUrl = 'https://localhost:7143/api/contacts';
+  private apiUrl = `${environment.apiBaseUrl}/contacts`;
 
   constructor(private http: HttpClient) {}
 

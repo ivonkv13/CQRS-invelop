@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using InvelopApp.Server.Domain;
 using InvelopApp.Server.Infrastructure;
+using InvelopApp.Server.Shared.Dtos;
 using MediatR;
 
 namespace InvelopApp.Server.Application.Commands.Handlers
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateContactCommand, Contact?>
+    public class UpdateProductHandler : IRequestHandler<UpdateContactCommand, ContactDto?>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -16,7 +17,7 @@ namespace InvelopApp.Server.Application.Commands.Handlers
             _mapper = mapper;
         }
 
-        public async Task<Contact?> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
+        public async Task<ContactDto?> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
             var contact = await _context.Contacts.FindAsync(request.Id, cancellationToken);
 
@@ -25,7 +26,7 @@ namespace InvelopApp.Server.Application.Commands.Handlers
             contact.Update(request.FirstName, request.LastName, request.DateOfBirth, request.Address, request.PhoneNumber, request.IBAN);
 
             await _context.SaveChangesAsync(cancellationToken);
-            return contact;
+            return _mapper.Map<Contact, ContactDto>(contact);
 
         }
     }

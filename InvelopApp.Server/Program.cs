@@ -1,13 +1,6 @@
-using FluentValidation;
-using InvelopApp.Server.Application.Behaviors;
 using InvelopApp.Server.Infrastructure;
 using InvelopApp.Server.Middleware;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Validations;
-using Microsoft.OpenApi.Writers;
-using System.Reflection;
 
 namespace InvelopApp.Server
 {

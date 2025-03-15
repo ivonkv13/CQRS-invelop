@@ -1,5 +1,5 @@
-﻿using InvelopApp.Server.Application.Common;
-using FluentValidation;
+﻿using FluentValidation;
+using InvelopApp.Server.Application.Common;
 using System.Text.Json;
 
 namespace InvelopApp.Server.Middleware
@@ -8,7 +8,7 @@ namespace InvelopApp.Server.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly IHostEnvironment _env;
-        const string _responseContetntType = "application/json";
+        private const string _responseContetntType = "application/json";
 
         public ExceptionMiddleware(RequestDelegate next, IHostEnvironment env)
         {

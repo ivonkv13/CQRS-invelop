@@ -2,5 +2,5 @@
 
 namespace InvelopApp.Server.Application.Commands
 {
-    public record DeleteContactCommand(Guid id) : IRequest<bool>;
+    public record DeleteContactCommand(Guid Id) : IRequest<bool>;
 }

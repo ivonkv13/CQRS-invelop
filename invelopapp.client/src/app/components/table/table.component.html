@@ -1,47 +1,54 @@
 <app-add-contact #addContactDialog></app-add-contact>
 <app-update-contact #updateContactDialog [contact]="selectedContact"></app-update-contact>
 
-<p-table [value]="contacts" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
-    [rowsPerPageOptions]="rowsPerPageOptions" [columns]="columns" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template pTemplate="caption">
-        <div class="table-header text-left">
-            <button pButton pRipple icon="pi pi-plus" class="p-button-info" (click)="openAddContactDialog()">
-                Add Contact
-            </button>
-        </div>
-    </ng-template>
+<div *ngIf="contacts$ | async as contacts; else loading">
 
-    <ng-template #header let-columns>
-        <tr>
-            <th *ngFor="let col of columns">
-                {{ col.header }}
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-rowData let-columns="columns">
-        <tr>
-            <td class="not-displayed">{{rowData["id"]}}</td>
-
-            <td *ngFor="let col of columns">
-                <ng-container *ngIf="col.field === 'dateOfBirth'; else normalValue">
-                    {{ rowData[col.field] | date: 'yyyy-MM-dd' }}
-                </ng-container>
-                <ng-template #normalValue>
-                    {{ rowData[col.field] }}
-                </ng-template>
-            </td>
-
-            <td>
-                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info button-with-margin"
-                    (click)="openUpdateContactDialog(rowData)">
+    <p-table [value]="contacts" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="rowsPerPageOptions" [columns]="columns" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="caption">
+            <div class="table-header text-left">
+                <button pButton pRipple icon="pi pi-plus" class="p-button-info" (click)="openAddContactDialog()">
+                    Add Contact
                 </button>
-                <button id="delete-contact-btn" pButton pRipple icon="pi pi-trash"
-                    class="p-button-rounded p-button-danger" (click)="deleteContact(rowData)">
-                </button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+            </div>
+        </ng-template>
+
+        <ng-template #header let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowData let-columns="columns">
+            <tr>
+                <td class="not-displayed">{{rowData["id"]}}</td>
+
+                <td *ngFor="let col of columns">
+                    <ng-container *ngIf="col.field === 'dateOfBirth'; else normalValue">
+                        {{ rowData[col.field] | date: 'yyyy-MM-dd' }}
+                    </ng-container>
+                    <ng-template #normalValue>
+                        {{ rowData[col.field] }}
+                    </ng-template>
+                </td>
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil"
+                        class="p-button-rounded p-button-info button-with-margin"
+                        (click)="openUpdateContactDialog(rowData)">
+                    </button>
+                    <button id="delete-contact-btn" pButton pRipple icon="pi pi-trash"
+                        class="p-button-rounded p-button-danger" (click)="deleteContact(rowData)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<ng-template #loading>
+    <p>Loading contacts...</p>
+</ng-template>

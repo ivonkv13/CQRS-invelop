@@ -1,4 +1,4 @@
-export interface TableColumn {
+export interface TableColumn<T> {
     header: string;
-    field: string;
+    field: keyof T;
 }

@@ -4,7 +4,6 @@ using InvelopApp.Server.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace InvelopApp.Server
 {

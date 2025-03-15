@@ -7,6 +7,7 @@ import {
   CreateContactRequest,
 } from '../../../../../models/contact.model';
 import { createContact } from '../../../../store/contacts/contact.actions';
+import { ContactFacade } from '../../../../../shared/facades/contact.facade';
 
 @Component({
   selector: 'app-add-contact',
@@ -18,7 +19,7 @@ export class AddContactComponent implements OnInit {
   contactForm: FormGroup;
   yesterday: Date = new Date;
 
-  constructor(private fb: FormBuilder, private store: Store<ContactState>) {
+  constructor(private fb: FormBuilder, private store: Store<ContactState>, private contactFacade: ContactFacade) {
     this.contactForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -64,6 +65,6 @@ export class AddContactComponent implements OnInit {
   }
 
   addContact(contact: CreateContactRequest) {
-    this.store.dispatch(createContact({ contact }));
+    this.contactFacade.addContact(contact);
   }
 }
